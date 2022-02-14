@@ -13,23 +13,23 @@ int main(int argc, char *argv[])
   
   if (argc != 2)
   {
-    printf("Argument error: input requires one integer argument");
+    printf("Argument error: input requires one integer argument\n");
     return -1;
   }
   
 
   if ((fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY)) < 0)
   {
-    printf("open_port: Unable to open /dev/ttyUSB0\n");
+    perror("Open_port: Unable to open /dev/ttyUSB0");
     exit(EXIT_FAILURE);
   }
   else
-  {
+  {	
     rc = ioctl(fd, TCGETS2, &term);
     
     if (rc)
     {
-        printf("Error fetching port attributes.\n");
+        perror("Error fetching port attributes: ");
         close(fd);
         exit(EXIT_FAILURE);
     }
@@ -40,11 +40,11 @@ int main(int argc, char *argv[])
     term.c_cflag |= BOTHER;
     term.c_ospeed = atoi(argv[1]);
     
-    rc = ioctl(fd, TCSETS2, &term);
+    rc = ioctl(fd, TCSETS2, &term); //Baud rate exceeding +/-3% of FT232H's pre- & post-scalers will not work
     
     if (rc)
     {
-        printf("Error changing baud rate.\n");
+        perror("Error changing baud rate: ");
         close(fd);
         exit(EXIT_FAILURE);
     }
