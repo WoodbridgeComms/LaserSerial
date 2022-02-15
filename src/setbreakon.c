@@ -10,13 +10,13 @@ int main()
 
   if ((fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY)) == -1)
   {
-    printf("open_port: Unable to open /dev/ttyUSB0");
+    printf("open_port: Unable to open /dev/ttyUSB0\n");
     exit(EXIT_FAILURE);
   }
   else
   {
     ioctl(fd, TIOCSBRK, NULL);
-    printf("Successfully set BREAK ON");
+    printf("Successfully set BREAK ON\n");
     close(fd);
   }
   
