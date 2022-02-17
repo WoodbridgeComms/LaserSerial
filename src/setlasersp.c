@@ -53,5 +53,5 @@ int main(int argc, char *argv[])
     close(fd);
   }
   
-  return fd;
+  return EXIT_SUCCESS;
 }

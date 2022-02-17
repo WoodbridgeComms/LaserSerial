@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
   if ((fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY)) == -1)
   {
-    printf("open_port: Unable to open /dev/ttyUSB0\n");
+    perror("open_port: Unable to open /dev/ttyUSB0\n");
     exit(EXIT_FAILURE);
   }
   else
