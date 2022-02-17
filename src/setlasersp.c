@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     
-    printf("current output baud rate: %u\n", term.c_ospeed);
+    printf("Current output baud rate: %u\n", term.c_ospeed);
     
     term.c_cflag &= ~CBAUD;
     term.c_cflag |= BOTHER;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     
-    printf("new output baud rate: %u\n", term.c_ospeed);
+    printf("New output baud rate: %u\n", term.c_ospeed);
     close(fd);
   }
   
