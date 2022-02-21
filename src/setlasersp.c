@@ -9,23 +9,30 @@
 
 #define DIV_MASK		0x1FFF //Bits 0 -> 13 are integer divisors; 14 -> 16 are fractional
 
-//Constants aren't used, but may be useful in the future
+/*
+	Obtains the constant definition for a specified baud rate
+	Constants are not currently used
+*/
 int baud_to_const(int baud)
 {
 #define BAUD(n) case n: return B##n
 	switch(baud)
 	{
-		BAUD(50); 	  BAUD(75); 	BAUD(110);	  BAUD(134); 	BAUD(150); 	   BAUD(200);
-		BAUD(300); 	  BAUD(600); 	BAUD(1200);	  BAUD(1800);   BAUD(2400);	   BAUD(4800);
-		BAUD(9600);	  BAUD(19200);	BAUD(38400);  BAUD(57600);  BAUD(115200);  BAUD(230400);
-		BAUD(460800); BAUD(500000);	BAUD(576000); BAUD(921600); BAUD(1000000); BAUD(1152000);
-		BAUD(1500000);BAUD(2000000);BAUD(2500000);BAUD(3000000);BAUD(3500000); BAUD(4000000);
+		BAUD(50); 	  	BAUD(75); 		BAUD(110);	  	BAUD(134); 		BAUD(150);
+		BAUD(200);		BAUD(300); 	  	BAUD(600); 		BAUD(1200);	  	BAUD(1800);   	
+		BAUD(2400);	   	BAUD(4800); 	BAUD(9600);	  	BAUD(19200);	BAUD(38400);  	
+		BAUD(57600);  	BAUD(115200);  	BAUD(230400);	BAUD(460800); 	BAUD(500000);			
+		BAUD(576000);	BAUD(921600); 	BAUD(1000000); 	BAUD(1152000); 	BAUD(1500000);
+		BAUD(2000000);	BAUD(2500000);	BAUD(3000000);	BAUD(3500000); 	BAUD(4000000);
 		default:
 			return -1;
 	}
 #undef BAUD
 }
 
+/*
+	Returns the divisor used by the FT232H for a specified baud rate
+*/
 float get_divisor(int baud)
 {
 	unsigned char frac_div[8] = {0, 3, 2, 4, 1, 5, 6, 7};
@@ -43,6 +50,13 @@ float get_divisor(int baud)
 	return (divisor & DIV_MASK) + frac[divisor >> 14];
 }
 
+/*
+	Check user's disired baud rate:
+	If it is not predifined by termios and its aliased form exceeds 3% from
+	the desired baud rate, it will notify the user of what the real baud
+	rate is.
+	For all legal values, it changes the FT232H's baud rate.
+*/
 int main(int argc, char *argv[])
 {
 	struct termios2 term;
