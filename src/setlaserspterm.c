@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 			baud = B3000000;
 			break;
 		case 3500000:
-			baud = B3000000;
+			baud = B3500000;
 			break;
 		case 4000000:
 			baud = B4000000;
