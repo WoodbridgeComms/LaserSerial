@@ -7,7 +7,7 @@
 #include <asm/termbits.h>
 #include <linux/serial.h>
 
-#define DIV_MASK		0x1FFF //Bits 0 -> 13 are integer divisors; 14 -> 16 are fractional
+#define DIV_MASK	0x1FFF //Bits 0 -> 13 are integer divisors; 14 -> 16 are fractional
 
 /*
 	Obtains the constant definition for a specified baud rate
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	} else if (inp_baud > 6000000)
 	{
-		printf("Rates above 6 MBaud are often inaccurate.");
+		printf("Rates of 7.5 MBaud and 12 MBaud are only attainable at desired rates over 6 MBaud\n");
 	}
 
 	//Open serial port
